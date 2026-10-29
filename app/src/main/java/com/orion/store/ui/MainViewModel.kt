@@ -1044,11 +1044,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun titleClick() {
-        if (s.isDevUnlocked) { toast("Already a developer."); return }
-        devClicks++; val left = 7 - devClicks
-        if (left in 1..4) { toast("You are $left steps away from being a developer."); haptic(H.LIGHT) }
-        if (devClicks >= 7) { set { it.withDevUnlocked(true) }; toast("You are now a developer!"); haptic(H.SUCCESS); devClicks = 0 }
-    }
+          // Dev mode disabled in CodeHub build.
+      }
 
     fun profileClick(view: String? = null, index: Int? = null) {
         if (view == "badges") { profileView = "badges"; badgeIndex = index; open(Overlay.PROFILE_STATS); haptic(H.LIGHT); return }
