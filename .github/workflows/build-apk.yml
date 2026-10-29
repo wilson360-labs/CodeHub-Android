@@ -21,11 +21,6 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Verify Java
-        run: |
-          echo "JAVA_HOME=$JAVA_HOME"
-          java -version 2>&1
-
       - name: Set up Android SDK
         run: |
           sudo mkdir -p /usr/local/lib/android/sdk
@@ -46,16 +41,15 @@ jobs:
       - name: Create local.properties
         run: echo "sdk.dir=/usr/local/lib/android/sdk" > local.properties
 
+      - name: Force JDK 17 in gradle.properties
+        run: |
+          grep -v "org.gradle.java.home" gradle.properties > gradle.properties.tmp || true
+          echo "org.gradle.java.home=/usr/lib/jvm/temurin-17-jdk-amd64" >> gradle.properties.tmp
+          mv gradle.properties.tmp gradle.properties
+          cat gradle.properties
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
-      - name: Check Gradle version
-        env:
-          JAVA_HOME: /usr/lib/jvm/temurin-17-jdk-amd64
-        run: |
-          export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
-          export PATH=/usr/lib/jvm/temurin-17-jdk-amd64/bin:$PATH
-          ./gradlew --version
 
       - name: Build debug APK
         env:
@@ -63,8 +57,6 @@ jobs:
         run: |
           export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
           export PATH=/usr/lib/jvm/temurin-17-jdk-amd64/bin:$PATH
-          echo "JAVA_HOME=$JAVA_HOME"
-          java -version
           ./gradlew :app:assembleDebug --stacktrace --no-daemon -Dorg.gradle.configuration-cache=false
 
       - name: Upload APK artifact
