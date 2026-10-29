@@ -49,6 +49,14 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Check Gradle version
+        env:
+          JAVA_HOME: /usr/lib/jvm/temurin-17-jdk-amd64
+        run: |
+          export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
+          export PATH=/usr/lib/jvm/temurin-17-jdk-amd64/bin:$PATH
+          ./gradlew --version
+
       - name: Build debug APK
         env:
           JAVA_HOME: /usr/lib/jvm/temurin-17-jdk-amd64
@@ -57,7 +65,7 @@ jobs:
           export PATH=/usr/lib/jvm/temurin-17-jdk-amd64/bin:$PATH
           echo "JAVA_HOME=$JAVA_HOME"
           java -version
-          ./gradlew :app:assembleDebug --stacktrace --no-daemon
+          ./gradlew :app:assembleDebug --stacktrace --no-daemon -Dorg.gradle.configuration-cache=false
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
