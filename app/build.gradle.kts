@@ -10,7 +10,7 @@ val keystore = rootProject.file("keystore.properties").takeIf { it.exists() }?.l
 
 android {
     namespace = "com.orion.store"
-    compileSdk = 37
+    compileSdk = 36
     defaultConfig {
         applicationId = "com.orion.store"
         minSdk = 24
