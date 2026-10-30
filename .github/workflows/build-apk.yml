@@ -35,7 +35,7 @@ jobs:
         run: |
           sudo mkdir -p /usr/local/lib/android/sdk
           cd /tmp
-          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline.zip
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip -O cmdline.zip
           unzip -q cmdline.zip -d /usr/local/lib/android/sdk/cmdline-tools
           mv /usr/local/lib/android/sdk/cmdline-tools/cmdline-tools /usr/local/lib/android/sdk/cmdline-tools/latest
           echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
